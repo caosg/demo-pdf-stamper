@@ -19,8 +19,6 @@ public class Form implements Serializable {
 	private String note;
 	private List<Item> items;
 
-	private static final BigDecimal TAX_RATE = new BigDecimal("0.08");
-
 	public String getTitle() {
 		return title;
 	}
@@ -119,12 +117,10 @@ public class Form implements Serializable {
 
 	public TotalPrice totalPrice() {
 		if (this.items == null) {
-			return new TotalPrice(0, 0);
+			return new TotalPrice(0);
 		}
 		long value = this.items.stream().mapToLong(Item::price).sum();
-		long tax = TAX_RATE.multiply(BigDecimal.valueOf(value))
-				.setScale(0, RoundingMode.FLOOR).intValue();
-		return new TotalPrice(value, tax);
+		return new TotalPrice(value);
 	}
 
 	@Override
@@ -181,10 +177,13 @@ public class Form implements Serializable {
 	public static class TotalPrice {
 		private final long value;
 		private final long tax;
+		private static final BigDecimal TAX_RATE = new BigDecimal("0.08");
 
-		public TotalPrice(long value, long tax) {
+		public TotalPrice(long value) {
 			this.value = value;
-			this.tax = tax;
+			this.tax = TAX_RATE.multiply(BigDecimal.valueOf(value))
+					.setScale(0, RoundingMode.FLOOR).longValue();
+			;
 		}
 
 		public long value() {
