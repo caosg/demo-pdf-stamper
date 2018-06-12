@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>請求書メーカー</title>
+</head>
+<body>
+
+<form data-th-action="@{/hello.pdf}" method="post" data-th-object="${form}">
+    <label data-th-for="title">表題</label>
+    <input type="text" size="50" data-th-field="*{title}"/><br/>
+
+    <label data-th-for="shortDescription">説明書き</label>
+    <input type="text" size="50"
+           data-th-field="*{shortDescription}"/><br/>
+
+    <label data-th-for="items0">適用</label>
+    <input type="text" size="50" data-th-field="*{items[0].name}"/><br/>
+
+    <label data-th-for="items0quantity">数量</label>
+    <input type="number" data-th-field="*{items[0].quantity}"/><br/>
+
+    <label data-th-for="items0unitPrice">単価</label>
+    <input type="number" data-th-field="*{items[0].unitPrice}"/><br/>
+
+    <label data-th-for="issuedBy">請求者住所、名前</label><br/>
+    <textarea cols="50" rows="10" data-th-field="*{issuedBy}"></textarea><br/>
+
+    <label data-th-for="issuedTo">請求宛先</label><br/>
+    <textarea cols="50" rows="10" data-th-field="*{issuedTo}"></textarea><br/>
+
+    <label data-th-for="note">備考</label><br/>
+    <textarea cols="50" rows="10" data-th-field="*{note}"></textarea><br/>
+    <input type="submit" name="submit" value="作成"/>
+</form>
+<br/>
+</body>
+</html>
