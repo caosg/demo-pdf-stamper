@@ -3,8 +3,8 @@ package com.example.demopdfstamper;
 import java.time.chrono.JapaneseChronology;
 import java.time.chrono.JapaneseDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -26,7 +26,7 @@ public class HelloController {
 	public String hello(@ModelAttribute Form form, Model model) {
 		form.setMeta1("請求日");
 		form.setMeta1Value(JapaneseDate.now()
-				.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)
+				.format(DateTimeFormatter.ofPattern("平成y年M月d日", Locale.JAPANESE)
 						.withChronology(JapaneseChronology.INSTANCE)));
 		model.addAttribute("form", form);
 		return "hello";
